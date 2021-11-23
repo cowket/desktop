@@ -1,26 +1,26 @@
-import path from 'path';
-import fs from 'fs';
-import webpack from 'webpack';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import chalk from 'chalk';
-import { merge } from 'webpack-merge';
-import { spawn, execSync } from 'child_process';
-import baseConfig from './webpack.config.base';
-import webpackPaths from './webpack.paths';
-import checkNodeEnv from '../scripts/check-node-env';
-import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+import path from 'path'
+import fs from 'fs'
+import webpack from 'webpack'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+import chalk from 'chalk'
+import { merge } from 'webpack-merge'
+import { spawn, execSync } from 'child_process'
+import baseConfig from './webpack.config.base'
+import webpackPaths from './webpack.paths'
+import checkNodeEnv from '../scripts/check-node-env'
+import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin'
 
 // When an ESLint server is running, we can't set the NODE_ENV so we'll check if it's
 // at the dev webpack config is not accidentally run in a production environment
 if (process.env.NODE_ENV === 'production') {
-  checkNodeEnv('development');
+  checkNodeEnv('development')
 }
 
-const port = process.env.PORT || 1212;
-const manifest = path.resolve(webpackPaths.dllPath, 'renderer.json');
+const port = process.env.PORT || 1212
+const manifest = path.resolve(webpackPaths.dllPath, 'renderer.json')
 const requiredByDLLConfig = module.parent.filename.includes(
   'webpack.config.renderer.dev.dll'
-);
+)
 
 /**
  * Warn if the DLL is not built
@@ -33,8 +33,8 @@ if (
     chalk.black.bgYellow.bold(
       'The DLL files are missing. Sit back while we build them for you with "npm run build-dll"'
     )
-  );
-  execSync('npm run postinstall');
+  )
+  execSync('npm run postinstall')
 }
 
 export default merge(baseConfig, {
@@ -49,7 +49,7 @@ export default merge(baseConfig, {
     'webpack/hot/only-dev-server',
     'core-js',
     'regenerator-runtime/runtime',
-    path.join(webpackPaths.srcRendererPath, 'index.tsx'),
+    path.join(webpackPaths.srcRendererPath, 'index.tsx')
   ],
 
   output: {
@@ -57,8 +57,8 @@ export default merge(baseConfig, {
     publicPath: '/',
     filename: 'renderer.dev.js',
     library: {
-      type: 'umd',
-    },
+      type: 'umd'
+    }
   },
 
   module: {
@@ -72,22 +72,22 @@ export default merge(baseConfig, {
             options: {
               modules: true,
               sourceMap: true,
-              importLoaders: 1,
-            },
+              importLoaders: 1
+            }
           },
-          'sass-loader',
+          'sass-loader'
         ],
-        include: /\.module\.s?(c|a)ss$/,
+        include: /\.module\.s?(c|a)ss$/
       },
       {
         test: /\.s?css$/,
         use: ['style-loader', 'css-loader', 'sass-loader'],
-        exclude: /\.module\.s?(c|a)ss$/,
+        exclude: /\.module\.s?(c|a)ss$/
       },
       //Font Loader
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/i,
-        type: 'asset/resource',
+        type: 'asset/resource'
       },
       // SVG Font
       {
@@ -96,16 +96,16 @@ export default merge(baseConfig, {
           loader: 'url-loader',
           options: {
             limit: 10000,
-            mimetype: 'image/svg+xml',
-          },
-        },
+            mimetype: 'image/svg+xml'
+          }
+        }
       },
       // Common Image Formats
       {
         test: /\.(?:ico|gif|png|jpg|jpeg|webp)$/,
-        use: 'url-loader',
-      },
-    ],
+        use: 'url-loader'
+      }
+    ]
   },
   plugins: [
     requiredByDLLConfig
@@ -113,7 +113,7 @@ export default merge(baseConfig, {
       : new webpack.DllReferencePlugin({
           context: webpackPaths.dllPath,
           manifest: require(manifest),
-          sourceType: 'var',
+          sourceType: 'var'
         }),
 
     new webpack.NoEmitOnErrorsPlugin(),
@@ -131,11 +131,11 @@ export default merge(baseConfig, {
      * 'staging', for example, by changing the ENV variables in the npm scripts
      */
     new webpack.EnvironmentPlugin({
-      NODE_ENV: 'development',
+      NODE_ENV: 'development'
     }),
 
     new webpack.LoaderOptionsPlugin({
-      debug: true,
+      debug: true
     }),
 
     new ReactRefreshWebpackPlugin(),
@@ -146,18 +146,18 @@ export default merge(baseConfig, {
       minify: {
         collapseWhitespace: true,
         removeAttributeQuotes: true,
-        removeComments: true,
+        removeComments: true
       },
       isBrowser: false,
       env: process.env.NODE_ENV,
       isDevelopment: process.env.NODE_ENV !== 'production',
-      nodeModules: webpackPaths.appNodeModulesPath,
-    }),
+      nodeModules: webpackPaths.appNodeModulesPath
+    })
   ],
 
   node: {
     __dirname: false,
-    __filename: false,
+    __filename: false
   },
 
   devServer: {
@@ -166,21 +166,21 @@ export default merge(baseConfig, {
     hot: true,
     headers: { 'Access-Control-Allow-Origin': '*' },
     static: {
-      publicPath: '/',
+      publicPath: '/'
     },
     historyApiFallback: {
       verbose: true,
-      disableDotRule: false,
+      disableDotRule: false
     },
     onBeforeSetupMiddleware() {
-      console.log('Starting Main Process...');
+      console.log('Starting Main Process...')
       spawn('npm', ['run', 'start:main'], {
         shell: true,
         env: process.env,
-        stdio: 'inherit',
+        stdio: 'inherit'
       })
         .on('close', (code) => process.exit(code))
-        .on('error', (spawnError) => console.error(spawnError));
-    },
-  },
-});
+        .on('error', (spawnError) => console.error(spawnError))
+    }
+  }
+})
