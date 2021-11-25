@@ -1,7 +1,7 @@
-import axios from 'axios'
 import { render } from 'react-dom'
 import App from './App'
+import setup from './api/setup'
 
-axios.defaults.adapter = require('axios/lib/adapters/http')
+setup()
 
 render(<App />, document.getElementById('root'))
