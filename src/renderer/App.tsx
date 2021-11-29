@@ -1,21 +1,21 @@
 import { MemoryRouter as Router, Switch, Route } from 'react-router-dom'
-import HelloWorld from './components/HelloWorld'
+import About from './views/About'
+import Main from './views/Main'
 
-const Hello = () => {
-  return (
-    <div>
-      <h1>Cowket Desktop Application Getting Started</h1>
-      <HelloWorld />
-    </div>
-  )
-}
+import { EuiThemeProvider } from '@elastic/eui'
+
+import '@elastic/eui/dist/eui_theme_light.css'
+import '@elastic/eui/dist/eui_theme_dark.css'
 
 export default function App() {
   return (
-    <Router>
-      <Switch>
-        <Route path="/" component={Hello} />
-      </Switch>
-    </Router>
+    <EuiThemeProvider>
+      <Router>
+        <Switch>
+          <Route path="/" component={Main} />
+          <Route path="/about" component={About} />
+        </Switch>
+      </Router>
+    </EuiThemeProvider>
   )
 }
