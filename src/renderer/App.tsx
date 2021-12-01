@@ -1,23 +1,29 @@
 import { MemoryRouter as Router, Switch, Route } from 'react-router-dom'
-import { EuiThemeProvider } from '@elastic/eui'
-import '@elastic/eui/dist/eui_theme_light.css'
-import '@elastic/eui/dist/eui_theme_dark.css'
+import { EuiThemeDefault, EuiThemeProvider, useEuiTheme } from '@elastic/eui'
+import { ThemeProvider } from 'styled-components'
 
 import About from './views/About'
 import Main from './views/Main'
-import Layout from './components/Layout'
+import Layout from './components/common/Layout'
+import Teams from './components/common/Teams'
+import GlobalStyle from './styles/global'
 
 export default function App() {
+  const { euiTheme } = useEuiTheme()
+
   return (
-    <EuiThemeProvider>
-      <Layout teamRender={<div>Team Render</div>}>
-        <Router>
-          <Switch>
-            <Route path="/" component={Main} />
-            <Route path="/about" component={About} />
-          </Switch>
-        </Router>
-      </Layout>
+    <EuiThemeProvider theme={EuiThemeDefault} colorMode="dark">
+      <ThemeProvider theme={euiTheme}>
+        <GlobalStyle theme={euiTheme} />
+        <Layout teamRender={<Teams />}>
+          <Router>
+            <Switch>
+              <Route path="/" component={Main} />
+              <Route path="/about" component={About} />
+            </Switch>
+          </Router>
+        </Layout>
+      </ThemeProvider>
     </EuiThemeProvider>
   )
 }

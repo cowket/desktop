@@ -10,7 +10,8 @@ module.exports = {
       {
         endOfLine: 'auto'
       }
-    ]
+    ],
+    '@typescript-eslint/no-explicit-any': 'off'
   },
   parserOptions: {
     ecmaVersion: 2020,

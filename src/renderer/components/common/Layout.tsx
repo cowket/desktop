@@ -1,4 +1,5 @@
 import React from 'react'
+import { EuiFlexGrid, EuiFlexItem } from '@elastic/eui'
 
 type LayoutProps = {
   teamRender?: React.ReactNode
@@ -6,9 +7,14 @@ type LayoutProps = {
 
 const Layout: React.FC<LayoutProps> = ({ children, teamRender }) => {
   return (
-    <div>
-      {children} {teamRender}
-    </div>
+    <EuiFlexGrid responsive={false}>
+      <EuiFlexItem grow={false}>{teamRender}</EuiFlexItem>
+      <EuiFlexItem grow={1}>
+        channels
+        {/* ? */}
+      </EuiFlexItem>
+      <EuiFlexItem grow={9}>{children}</EuiFlexItem>
+    </EuiFlexGrid>
   )
 }
 

@@ -1,0 +1,12 @@
+body {
+  overflow: hidden;
+  height: 110vh; // 왜 110vh일까..
+
+  > #root {
+    height: 100%;
+
+    > div {
+      height: 100%;
+    }
+  }
+}
