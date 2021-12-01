@@ -37,3 +37,7 @@ API 호출 및 API 호출 라이브러리에 대한 설정을 `renderer/api` 폴
 ## 상태 관리
 
 [리코일](https://recoiljs.org/ko/docs/introduction/getting-started)을 한번도 사용해보지 않아서 이번 기회에 사용해보고 싶습니다. 더 좋은 상태 관리 라이브러리 있으시면 의견 남겨주세요. 일단은 프로젝트 세팅을 리코일 기준으로 세팅해놓겠습니다.
+
+## 패키지 매니저
+
+`yarn` 버전 1을 사용합니다.
