@@ -1,17 +1,17 @@
-import { useEuiTheme } from '@elastic/eui'
 import React from 'react'
+import { useTeams } from 'renderer/hooks/team'
 import styled from 'styled-components'
 
 const TeamsWrapper = styled.div`
   padding: 1rem;
   height: 100%;
-  border-right: 1px solid ${(props) => props.theme.colors.darkShade};
+  border-right: 1px solid ${(props) => props.theme.colors.lightShade};
 `
 
 const Teams: React.FC = () => {
-  const { euiTheme } = useEuiTheme()
+  const [teams, loading] = useTeams()
 
-  return <TeamsWrapper theme={euiTheme}>teams</TeamsWrapper>
+  return <TeamsWrapper>{loading ? <div>asdasf</div> : teams.length}</TeamsWrapper>
 }
 
 export default Teams

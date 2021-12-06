@@ -12,7 +12,7 @@ export default function App() {
   const { euiTheme } = useEuiTheme()
 
   return (
-    <EuiThemeProvider theme={EuiThemeDefault} colorMode="dark">
+    <EuiThemeProvider theme={EuiThemeDefault} colorMode="light">
       <ThemeProvider theme={euiTheme}>
         <GlobalStyle theme={euiTheme} />
         <Layout teamRender={<Teams />}>

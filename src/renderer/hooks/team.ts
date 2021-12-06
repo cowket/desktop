@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { getTeams } from 'renderer/api'
+import { CowketTeam } from 'renderer/types/team'
 
-export function useTeams(): [unknown[], boolean] {
-  const [teams, setTeams] = useState<unknown[]>([])
+export function useTeams(): [CowketTeam[], boolean] {
+  const [teams, setTeams] = useState<CowketTeam[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -22,4 +23,4 @@ export function useTeams(): [unknown[], boolean] {
   return [teams, loading]
 }
 
-export function test() {}
+export const S = {}

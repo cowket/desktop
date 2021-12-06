@@ -3,7 +3,6 @@ import App from './App'
 import setup from './api/setup'
 import './styles/global.scss'
 import '@elastic/eui/dist/eui_theme_light.css'
-// import '@elastic/eui/dist/eui_theme_dark.css'
 
 setup()
 
